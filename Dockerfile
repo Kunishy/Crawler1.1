@@ -29,7 +29,6 @@ COPY pom.xml ./
 # 複製後端源碼
 COPY src/main ./src/main
 
-COPY src/test ./src/test
 
 # 構建Spring Boot應用
 RUN mvn clean package -DskipTests
