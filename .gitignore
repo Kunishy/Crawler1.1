@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+RWD_DESIGN_GUIDE.md
+DOCKER_DEPLOYMENT.md

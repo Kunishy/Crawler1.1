@@ -1,0 +1,32 @@
+# Maven構建目錄
+target/
+!target/*.jar
+
+# IDE檔案
+.idea/
+.vscode/
+*.iml
+
+# 作業系統檔案
+.DS_Store
+Thumbs.db
+
+# Git檔案
+.git/
+.gitignore
+
+# 日誌檔案
+*.log
+
+# 測試檔案
+src/test/
+
+# 文檔檔案
+*.md
+docs/
+
+# 其他
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

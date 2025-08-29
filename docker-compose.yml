@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  # Spring Boot應用程式
+  crawler-app:
+    build: .
+    container_name: crawler-app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATA_MONGODB_URI=${MONGODB_URI:-mongodb://mongodb:27017/keelung_sights}
+      - JAVA_OPTS=-Xmx512m -Xms256m -XX:+UseG1GC -XX:+UseContainerSupport
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - crawler-network
+
+  # MongoDB資料庫（可選，用於本地開發）
+  mongodb:
+    image: mongo:7.0
+    container_name: crawler-mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=keelung_sights
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    networks:
+      - crawler-network
+
+  # MongoDB Express（可選，用於資料庫管理）
+  mongo-express:
+    image: mongo-express:1.0.0
+    container_name: crawler-mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=
+      - ME_CONFIG_MONGODB_URL=mongodb://mongodb:27017/
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - crawler-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  crawler-network:
+    driver: bridge
