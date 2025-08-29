@@ -1,6 +1,7 @@
-# Maven構建目錄
+# 構建目錄
 target/
-!target/*.jar
+build/
+node_modules/
 
 # IDE檔案
 .idea/
@@ -17,6 +18,9 @@ Thumbs.db
 
 # 日誌檔案
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # 測試檔案
 src/test/
@@ -25,8 +29,13 @@ src/test/
 *.md
 docs/
 
+# 環境配置
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
 # 其他
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+coverage/
+.nyc_output/
