@@ -8,7 +8,7 @@ WORKDIR /app/frontend
 COPY package*.json ./
 
 # 安裝前端依賴
-RUN npm ci --only=production
+RUN npm ci
 
 # 複製前端源碼
 COPY src ./src
@@ -27,7 +27,9 @@ WORKDIR /app/backend
 COPY pom.xml ./
 
 # 複製後端源碼
-COPY src ./src
+COPY src/main ./src/main
+
+COPY src/test ./src/test
 
 # 構建Spring Boot應用
 RUN mvn clean package -DskipTests
@@ -38,7 +40,7 @@ FROM eclipse-temurin:21-jre
 # 設置工作目錄
 WORKDIR /app
 
-# 從前端構建階段複製靜態檔案
+# 從前端構建階段複製靜態檔案到Spring Boot的static目錄
 COPY --from=frontend-build /app/frontend/build ./static
 
 # 從後端構建階段複製JAR檔案
