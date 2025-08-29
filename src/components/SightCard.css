@@ -1,0 +1,306 @@
+/* 景點卡片主要樣式 */
+.sight-card {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  background: #ffffff;
+}
+
+.sight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: #007bff;
+}
+
+.sight-card .card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 卡片標題樣式 */
+.sight-card .card-title {
+  color: #2c3e50;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.3;
+  min-height: 2.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 卡片文字樣式 */
+.sight-card .card-text {
+  color: #6c757d;
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* 按鈕群組樣式 */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.btn-group .btn {
+  width: 100%;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-group .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-group .btn:active {
+  transform: translateY(0);
+}
+
+/* 圖片容器樣式 */
+.image-container {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 景點圖片樣式 */
+.sight-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.sight-image:hover {
+  transform: scale(1.05);
+}
+
+.sight-image.image-success {
+  border: 3px solid #28a745;
+}
+
+/* 備用圖片樣式 */
+.fallback-image {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  color: #6c757d;
+  font-size: 0.9rem;
+  border: 2px dashed #dee2e6;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.fallback-image span {
+  padding: 1rem;
+  font-weight: 500;
+}
+
+/* 響應式設計 - 手機 (小於 576px) */
+@media (max-width: 575.98px) {
+  .sight-card .card-body {
+    padding: 1.25rem;
+  }
+  
+  .sight-card .card-title {
+    font-size: 1.1rem;
+    min-height: 2.2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .sight-card .card-text {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .btn-group {
+    gap: 0.5rem;
+    padding-top: 0.75rem;
+  }
+  
+  .btn-group .btn {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+  
+  .sight-image,
+  .fallback-image {
+    height: 180px;
+  }
+  
+  .image-container {
+    margin-bottom: 0.75rem;
+  }
+}
+
+/* 響應式設計 - 平板 (576px - 991px) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .sight-card .card-body {
+    padding: 1.35rem;
+  }
+  
+  .sight-card .card-title {
+    font-size: 1.2rem;
+    min-height: 2.4rem;
+  }
+  
+  .sight-image,
+  .fallback-image {
+    height: 200px;
+  }
+  
+  .btn-group .btn {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.88rem;
+  }
+}
+
+/* 響應式設計 - 桌機 (992px 以上) */
+@media (min-width: 992px) {
+  .sight-card .card-body {
+    padding: 1.5rem;
+  }
+  
+  .sight-card .card-title {
+    font-size: 1.25rem;
+    min-height: 2.5rem;
+  }
+  
+  .sight-image,
+  .fallback-image {
+    height: 220px;
+  }
+  
+  .btn-group .btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* 響應式設計 - 大螢幕 (1200px 以上) */
+@media (min-width: 1200px) {
+  .sight-card .card-body {
+    padding: 1.75rem;
+  }
+  
+  .sight-card .card-title {
+    font-size: 1.3rem;
+    min-height: 2.6rem;
+  }
+  
+  .sight-image,
+  .fallback-image {
+    height: 240px;
+  }
+  
+  .btn-group .btn {
+    padding: 0.8rem 1.1rem;
+    font-size: 0.95rem;
+  }
+}
+
+/* 觸控設備優化 */
+@media (hover: none) and (pointer: coarse) {
+  .sight-card:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sight-image:hover {
+    transform: none;
+  }
+  
+  .btn-group .btn:hover {
+    transform: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .btn-group .btn:active {
+    transform: scale(0.98);
+    background-color: #0056b3;
+  }
+  
+  /* 確保觸控目標足夠大 */
+  .btn-group .btn {
+    min-height: 44px;
+  }
+}
+
+/* 高對比度模式支援 */
+@media (prefers-contrast: high) {
+  .sight-card {
+    border: 2px solid #000000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .sight-card .card-title {
+    color: #000000;
+  }
+  
+  .sight-card .card-text {
+    color: #333333;
+  }
+  
+  .btn-group .btn {
+    border: 2px solid #000000;
+  }
+}
+
+/* 減少動畫模式支援 */
+@media (prefers-reduced-motion: reduce) {
+  .sight-card,
+  .sight-card:hover,
+  .sight-image,
+  .sight-image:hover,
+  .btn-group .btn,
+  .btn-group .btn:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* 深色模式支援 */
+@media (prefers-color-scheme: dark) {
+  .sight-card {
+    background: #2d3748;
+    border-color: #4a5568;
+    color: #e2e8f0;
+  }
+  
+  .sight-card .card-title {
+    color: #f7fafc;
+  }
+  
+  .sight-card .card-text {
+    color: #cbd5e0;
+  }
+  
+  .fallback-image {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    color: #a0aec0;
+    border-color: #718096;
+  }
+} 

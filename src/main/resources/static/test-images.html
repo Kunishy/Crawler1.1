@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>圖片錯誤處理測試</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .image-container {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .image-status {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .status-success {
+            color: #28a745;
+        }
+        .status-error {
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <h1 class="mb-4">圖片錯誤處理測試</h1>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h3>正常圖片</h3>
+                <div class="image-container">
+                    <img src="https://via.placeholder.com/300x200/28a745/ffffff?text=正常圖片" 
+                         class="img-fluid" alt="正常圖片"
+                         onerror="handleImageError(this)" onload="handleImageLoad(this)">
+                    <div class="image-status" id="status1">載入中...</div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <h3>無效圖片URL</h3>
+                <div class="image-container">
+                    <img src="https://invalid-url-that-does-not-exist.com/image.jpg" 
+                         class="img-fluid" alt="無效圖片"
+                         onerror="handleImageError(this)" onload="handleImageLoad(this)">
+                    <div class="image-status" id="status2">載入中...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h3>空URL</h3>
+                <div class="image-container">
+                    <img src="" 
+                         class="img-fluid" alt="空URL"
+                         onerror="handleImageError(this)" onload="handleImageLoad(this)">
+                    <div class="image-status" id="status3">載入中...</div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <h3>404錯誤圖片</h3>
+                <div class="image-container">
+                    <img src="https://httpstat.us/404" 
+                         class="img-fluid" alt="404錯誤"
+                         onerror="handleImageError(this)" onload="handleImageLoad(this)">
+                    <div class="image-status" id="status4">載入中...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <button class="btn btn-primary" onclick="testAllImages()">測試所有圖片</button>
+            <button class="btn btn-secondary" onclick="resetImages()">重置圖片</button>
+        </div>
+    </div>
+
+    <script>
+        // 備用圖片列表
+        const fallbackImages = [
+            'https://via.placeholder.com/300x200/cccccc/666666?text=備用圖片1',
+            'https://via.placeholder.com/300x200/e3f2fd/1976d2?text=備用圖片2',
+            'https://via.placeholder.com/300x200/f3e5f5/7b1fa2?text=備用圖片3'
+        ];
+        
+        // 處理圖片載入錯誤
+        function handleImageError(img) {
+            img.onerror = null; // 防止無限循環
+            
+            if (!img.dataset.fallbackIndex) {
+                img.dataset.fallbackIndex = '0';
+            }
+            
+            const fallbackIndex = parseInt(img.dataset.fallbackIndex);
+            
+            if (fallbackIndex < fallbackImages.length) {
+                img.src = fallbackImages[fallbackIndex];
+                img.alt = '備用圖片 ' + (fallbackIndex + 1);
+                img.dataset.fallbackIndex = (fallbackIndex + 1).toString();
+                updateStatus(img, '嘗試備用圖片 ' + (fallbackIndex + 1), 'status-error');
+            } else {
+                img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY1Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1lcmlmIiBmb250LXNpemU9IjE2IiBmaWxsPSIjOTk5IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBkeT0iLjNlbSI+6KGM6KGT5Y2g5L2N5paH5Lu2PC90ZXh0Pjwvc3ZnPg==';
+                img.alt = '圖片載入失敗';
+                img.style.border = '2px solid #dc3545';
+                img.style.backgroundColor = '#f8d7da';
+                updateStatus(img, '所有備用圖片都失敗', 'status-error');
+            }
+        }
+        
+        // 處理圖片載入成功
+        function handleImageLoad(img) {
+            img.style.border = '2px solid #28a745';
+            img.style.backgroundColor = '#d4edda';
+            updateStatus(img, '圖片載入成功', 'status-success');
+        }
+        
+        // 更新狀態顯示
+        function updateStatus(img, message, className) {
+            const container = img.closest('.image-container');
+            const statusDiv = container.querySelector('.image-status');
+            statusDiv.textContent = message;
+            statusDiv.className = 'image-status ' + className;
+        }
+        
+        // 測試所有圖片
+        function testAllImages() {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.dataset.fallbackIndex = '0';
+                img.style.border = '';
+                img.style.backgroundColor = '';
+                updateStatus(img, '重新載入中...', '');
+            });
+        }
+        
+        // 重置圖片
+        function resetImages() {
+            location.reload();
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
